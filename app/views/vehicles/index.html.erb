@@ -1,0 +1,54 @@
+<br>
+<h1>Vehicle And Users Data</h1>
+
+<div class="page-button">
+  <%= form_tag(vehicles_path, method: :get) do %>
+    <%= text_field_tag(:search, params[:search], placeholder: "Search by name or model") %>
+    <%= submit_tag "Search!" %>
+  <% end %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Nationality</th>
+      <th scope="col">Email</th>
+      <th scope="col">Model</th>
+      <th scope="col">Year</th>
+      <th scope="col">Chassis Number</th>
+      <th scope="col">Color</th>
+      <th scope="col">Registration Date</th>
+      <th scope="col">Odometer Reading</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vehicles.each do |vehicle| %>
+      <tr>
+        <td><%= vehicle.user.name %></td>
+        <td><%= vehicle.user.nationality %></td>
+        <td><%= vehicle.user.email %></td>
+        <td><%= vehicle.model %></td>
+        <td><%= vehicle.year %></td>
+        <td><%= vehicle.chassis_number %></td>
+        <td><%= vehicle.color %></td>
+        <td><%= vehicle.registration_date %></td>
+        <td><%= vehicle.odometer_reading %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<span class="download-txt">
+  Download CSV for number of customers by nationality
+</span>
+<div class="page-button">
+  <%= button_to download_csv_vehicles_path(format: "csv"), method: :get, class: 'btn-navbar' do %>
+    <i class="fa fa-download" aria-hidden="true"> Download</i></button>
+  <% end %>
+</div>
+
+<h1>Import the data!</h1>
+<%= form_tag import_vehicles_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import CSV" %>
+<% end %>
